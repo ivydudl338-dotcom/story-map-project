@@ -60,7 +60,8 @@ class SlideDeck {
    * @return {object} The FeatureCollection as loaded from the data file
    */
   async getSlideFeatureCollection(slide) {
-    const resp = await fetch(`data/${slide.id}.json`);
+    const source = slide.dataset.source || slide.id;
+    const resp = await fetch(`data/processed/${source}.geojson`);
     const data = await resp.json();
     return data;
   }
@@ -89,6 +90,7 @@ class SlideDeck {
     const collection = await this.getSlideFeatureCollection(slide);
     const options = this.slideOptions[slide.id];
     const layer = this.updateDataLayer(collection, options);
+    const view = options && options.view;
 
     /**
      * Create a bounds object from a GeoJSON bbox array.
@@ -119,10 +121,21 @@ class SlideDeck {
     };
 
     this.map.addEventListener('moveend', handleFlyEnd);
-    if (collection.bbox) {
-      this.map.flyToBounds(boundsFromBbox(collection.bbox));
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animationOptions = { animate: !reducedMotion, duration: 1.2 };
+
+    if (view && view.bounds) {
+      this.map.flyToBounds(view.bounds, {
+        ...animationOptions,
+        padding: [24, 24],
+      });
+    } else if (view && view.center && view.zoom !== undefined) {
+      this.map.flyTo(view.center, view.zoom, animationOptions);
+    } else if (collection.bbox) {
+      this.map.flyToBounds(boundsFromBbox(collection.bbox), animationOptions);
     } else {
-      this.map.flyToBounds(layer.getBounds());
+      this.map.flyToBounds(layer.getBounds(), animationOptions);
     }
   }
 

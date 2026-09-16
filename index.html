@@ -3,35 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Story</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <title>The Geography of Waiting</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+  <a class="skip-link" href="#story">Skip to the story</a>
   <main>
-    <div class="map-container">
+    <div class="map-container" aria-label="Interactive map of Philadelphia 311 abandoned vehicle requests">
       <div class="map" id="map"></div>
+      <div class="map-note" aria-hidden="true">Scroll to explore</div>
     </div>
-    <section class="slide-section">
-      <article class="slide" id="title-slide">
-        <h1>Story Map title</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse molestie hendrerit quam, efficitur vestibulum justo vehicula a.</p>
-        <p>Nullam et metus eu eros facilisis commodo. Vivamus elementum nulla nisi, eget fermentum mauris placerat sed.</p>
+
+    <section class="slide-section" id="story" aria-label="Story">
+      <article class="slide title-slide" id="title-slide" data-source="zip_metrics">
+        <p class="eyebrow">Philadelphia 311 · 2025</p>
+        <h1>The Geography of Waiting</h1>
+        <p class="dek">In 2025, Philadelphia residents submitted <strong>27,987</strong> reports of abandoned vehicles. What happened after they clicked “submit” varied across the city.</p>
+        <p class="question">Does where someone lives shape how long a 311 case remains unresolved?</p>
       </article>
 
-      <article class="slide" id="second-slide">
-        <h2>Second slide title</h2>
-        <p>Nunc dapibus arcu vel sapien rutrum rhoncus. Pellentesque dignissim, nisi ac pellentesque egestas, urna risus varius leo, eget efficitur risus tortor vel magna.</p>
-        <p>Suspendisse sed posuere velit, ac gravida elit. Nam viverra vehicula nisl ut gravida.</p>
+      <article class="slide" id="request-volume" data-source="zip_metrics">
+        <p class="chapter-number">01</p>
+        <h2>Nearly 28,000 requests in one year</h2>
+        <p>Reports were recorded in 47 Philadelphia ZIP Codes. Darker areas received more abandoned-vehicle requests during 2025.</p>
+        <div class="stat"><strong>27,987</strong><span>requests citywide</span></div>
+        <div class="legend legend-volume" aria-label="Legend: total requests from lower to higher">
+          <span>Fewer</span><i></i><i></i><i></i><i></i><i></i><span>More</span>
+        </div>
+        <p class="note">A high count does not necessarily mean more abandoned vehicles. Population, street conditions, and residents’ use of 311 can all affect reporting.</p>
       </article>
 
-      <article class="slide" id="third-slide">
-        <h2>Third slide title</h2>
-        <p>Pellentesque nunc tellus, euismod sed mauris vitae, volutpat viverra metus. Nunc vel nisl massa. Nunc ullamcorper interdum vehicula. Ut at mi congue, lacinia eros eget, gravida libero. Vivamus et cursus lorem. Nulla elementum neque a nunc sollicitudin, eget maximus turpis egestas. In hac habitasse platea dictumst. Maecenas aliquet nibh tempor leo pretium, vel congue dui malesuada. Sed non felis porttitor, laoreet ante ac, volutpat nibh. Sed tincidunt eleifend felis, et porttitor dui interdum scelerisque. Mauris eget eros pharetra, pretium justo nec, commodo tellus. Duis orci sem, vehicula a leo eget, lacinia venenatis neque. Duis purus enim, volutpat dapibus arcu eget, aliquam malesuada nulla. Duis nisi eros, semper eu bibendum condimentum, vehicula vel felis. Integer a lacus dictum, tempor nulla at, ornare ante.</p>
+      <article class="slide" id="open-backlog" data-source="zip_metrics">
+        <p class="chapter-number">02</p>
+        <h2>Submitting a request was only the beginning</h2>
+        <p>By the latest update in the dataset, more than half of the 2025 requests still appeared as open.</p>
+        <div class="stat"><strong>55%</strong><span>still listed as open</span></div>
+        <div class="legend legend-open" aria-label="Legend: share of requests still open from lower to higher">
+          <span>Lower</span><i></i><i></i><i></i><i></i><i></i><span>Higher</span>
+        </div>
+        <p class="note">Hover or tap a ZIP Code to see its number of requests and open share.</p>
+      </article>
+
+      <article class="slide" id="six-month-outcomes" data-source="zip_metrics">
+        <p class="chapter-number">03</p>
+        <h2>Was six months enough?</h2>
+        <p>Only 8,050 requests were closed within 180 days. This measure includes every 2025 request, including cases that remained open.</p>
+        <div class="stat"><strong>28.8%</strong><span>closed within 180 days</span></div>
+        <div class="legend legend-closed" aria-label="Legend: share closed within 180 days from lower to higher">
+          <span>Lower</span><i></i><i></i><i></i><i></i><i></i><span>Higher</span>
+        </div>
+        <p class="note">Using a fixed six-month threshold avoids making places with many unresolved cases appear artificially fast.</p>
+      </article>
+
+      <article class="slide" id="neighborhood-contrast" data-source="zip_metrics">
+        <p class="chapter-number">04</p>
+        <h2>One city, two very different waits</h2>
+        <p>Among requests that eventually closed, the typical wait in <strong>19128</strong> was about three months. In <strong>19131</strong>, it was nearly nine months.</p>
+        <div class="comparison">
+          <div><span class="comparison-dot fast"></span><strong>19128</strong><b>93 days</b><small>35% still open</small></div>
+          <div><span class="comparison-dot slow"></span><strong>19131</strong><b>261 days</b><small>64% still open</small></div>
+        </div>
+        <p class="note">Median closure time describes closed cases only. The open share provides essential context.</p>
+      </article>
+
+      <article class="slide conclusion" id="conclusion" data-source="zip_metrics">
+        <p class="chapter-number">05</p>
+        <h2>What this map can—and cannot—tell us</h2>
+        <p>Philadelphia’s 311 records reveal an uneven geography of administrative waiting. They do not, by themselves, explain why those differences exist.</p>
+        <ul>
+          <li>The data include reported problems, not every abandoned vehicle.</li>
+          <li>Residents may differ in how often they use 311.</li>
+          <li>A “closed” case does not necessarily mean the vehicle was removed.</li>
+          <li>The data snapshot was last updated September 12, 2026.</li>
+        </ul>
+        <div class="sources">
+          <h3>Sources</h3>
+          <p><a href="https://opendataphilly.org/datasets/311-service-and-information-requests/" target="_blank" rel="noreferrer">Philadelphia 311 Service and Information Requests</a></p>
+          <p><a href="https://opendataphilly.org/datasets/zip-codes/" target="_blank" rel="noreferrer">City of Philadelphia ZIP Code Boundaries</a></p>
+        </div>
       </article>
     </section>
   </main>

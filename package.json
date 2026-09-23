@@ -8,7 +8,8 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare-data": "node scripts/prepare-data.mjs",
+    "lint": "eslint js scripts && stylelint \"css/**/*.css\""
   },
   "author": "",
   "license": "ISC",
